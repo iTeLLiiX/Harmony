@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "harmony-web/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "harmony-web/dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "harmony-web/dist/$1"
+    }
+  ]
+}
