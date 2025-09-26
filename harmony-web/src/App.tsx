@@ -9,7 +9,9 @@ import { createTheme } from '@mui/material/styles';
 import LandingPage from './pages/LandingPage';
 import PremiumLandingPage from './pages/PremiumLandingPage';
 import Login from './pages/Login';
+import PremiumLogin from './pages/PremiumLogin';
 import Registrierung from './pages/Registrierung';
+import PremiumRegistrierung from './pages/PremiumRegistrierung';
 import Profil from './pages/Profil';
 import Matching from './pages/Matching';
 import PremiumMatching from './pages/PremiumMatching';
@@ -83,8 +85,8 @@ const App: React.FC = () => {
               <Routes>
                 {/* Öffentliche Routen */}
                 <Route path="/" element={<LandingPage />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/registrierung" element={<Registrierung />} />
+                <Route path="/login" element={<PremiumLogin />} />
+                <Route path="/registrierung" element={<PremiumRegistrierung />} />
                 
                 {/* Geschützte Routen */}
                 <Route 

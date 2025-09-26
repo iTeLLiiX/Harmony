@@ -12,17 +12,30 @@ import {
   InputAdornment,
   Alert,
   Link,
-  Divider
+  Divider,
+  Chip,
+  Stack,
+  useTheme
 } from '@mui/material';
 import {
   Visibility,
   VisibilityOff,
   Phone,
   Email,
-  Help
+  Help,
+  ArrowBack,
+  Security,
+  Speed
 } from '@mui/icons-material';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '../components/Logo';
+import { 
+  PremiumButton, 
+  PremiumCard, 
+  fadeInUp,
+  staggerContainer,
+  scaleIn
+} from '../components/animations/AdvancedAnimations';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
