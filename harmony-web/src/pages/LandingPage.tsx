@@ -78,17 +78,20 @@ const LandingPage: React.FC = () => {
         <Help />
       </IconButton>
 
-      {/* Hero Section */}
-      <Box
-        sx={{
-          background: 'linear-gradient(135deg, #C80026 0%, #8B0000 100%)',
-          color: 'white',
-          py: 8,
-          textAlign: 'center',
-          position: 'relative',
-          overflow: 'hidden'
-        }}
-      >
+          {/* Hero Section */}
+          <Box
+            sx={{
+              background: 'linear-gradient(135deg, #C80026 0%, #8B0000 100%)',
+              color: 'white',
+              py: { xs: 6, md: 8 },
+              textAlign: 'center',
+              position: 'relative',
+              overflow: 'hidden',
+              minHeight: '70vh',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
         {/* Background Pattern */}
         <Box
           sx={{
@@ -105,17 +108,37 @@ const LandingPage: React.FC = () => {
             zIndex: 1
           }}
         />
-        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
-          <Box sx={{ mb: 4 }}>
-            <Logo size="large" color="white" />
-          </Box>
-          <Typography variant="h3" component="h2" gutterBottom sx={{ mb: 4 }}>
-            Wir stehen für Liebe. 💕
-          </Typography>
-          <Typography variant="h6" sx={{ mb: 6, maxWidth: 600, mx: 'auto' }}>
-            Finde deine große Liebe basierend auf Persönlichkeit und gemeinsamen Interessen. 
-            Benutzerfreundlich für alle Altersgruppen (18-99 Jahre).
-          </Typography>
+            <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+              <Box sx={{ mb: 6 }}>
+                <Logo size="large" color="white" />
+              </Box>
+              <Typography 
+                variant="h2" 
+                component="h1" 
+                gutterBottom 
+                sx={{ 
+                  mb: 4,
+                  fontWeight: 700,
+                  fontSize: { xs: '2.5rem', md: '3.5rem' },
+                  lineHeight: 1.2
+                }}
+              >
+                Wir stehen für Liebe 💕
+              </Typography>
+              <Typography 
+                variant="h5" 
+                sx={{ 
+                  mb: 6, 
+                  maxWidth: 700, 
+                  mx: 'auto',
+                  fontWeight: 400,
+                  opacity: 0.9,
+                  lineHeight: 1.6
+                }}
+              >
+                Finde deine große Liebe basierend auf Persönlichkeit und gemeinsamen Interessen. 
+                Benutzerfreundlich für alle Altersgruppen (18-99 Jahre).
+              </Typography>
           
           {/* Social Proof wie bei Boo */}
           <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4, flexWrap: 'wrap' }}>
@@ -127,51 +150,63 @@ const LandingPage: React.FC = () => {
             </Typography>
           </Box>
           
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Button
-              variant="contained"
-              size="large"
-              onClick={handleRegistrierung}
-              sx={{
-                bgcolor: 'white',
-                color: 'primary.main',
-                px: 6,
-                py: 2,
-                fontSize: '18px',
-                fontWeight: 600,
-                borderRadius: 2,
-                '&:hover': {
-                  bgcolor: 'grey.100',
-                  transform: 'translateY(-2px)',
-                  boxShadow: 4
-                }
-              }}
-            >
-              Jetzt kostenlos registrieren
-            </Button>
-            <Button
-              variant="outlined"
-              size="large"
-              onClick={() => navigate('/login')}
-              sx={{
-                borderColor: 'white',
-                color: 'white',
-                px: 6,
-                py: 2,
-                fontSize: '18px',
-                fontWeight: 600,
-                borderRadius: 2,
-                '&:hover': {
-                  bgcolor: 'rgba(255,255,255,0.1)',
-                  borderColor: 'white',
-                  transform: 'translateY(-2px)',
-                  boxShadow: 4
-                }
-              }}
-            >
-              Anmelden
-            </Button>
-          </Box>
+              <Box sx={{ 
+                display: 'flex', 
+                gap: 3, 
+                justifyContent: 'center', 
+                flexWrap: 'wrap',
+                mt: 4
+              }}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  onClick={handleRegistrierung}
+                  sx={{
+                    bgcolor: 'white',
+                    color: 'primary.main',
+                    px: 6,
+                    py: 3,
+                    fontSize: '1.125rem',
+                    fontWeight: 700,
+                    borderRadius: 3,
+                    minWidth: 280,
+                    height: 56,
+                    '&:hover': {
+                      bgcolor: 'grey.50',
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
+                    }
+                  }}
+                >
+                  Jetzt kostenlos registrieren
+                </Button>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  onClick={() => navigate('/login')}
+                  sx={{
+                    borderColor: 'white',
+                    color: 'white',
+                    borderWidth: 2,
+                    px: 6,
+                    py: 3,
+                    fontSize: '1.125rem',
+                    fontWeight: 700,
+                    borderRadius: 3,
+                    minWidth: 280,
+                    height: 56,
+                    '&:hover': {
+                      bgcolor: 'rgba(255,255,255,0.1)',
+                      borderColor: 'white',
+                      borderWidth: 2,
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
+                    }
+                  }}
+                >
+                  Anmelden
+                </Button>
+              </Box>
         </Container>
       </Box>
 
@@ -201,20 +236,21 @@ const LandingPage: React.FC = () => {
             { name: '#learning', count: '2,3 Mio. Seelen', color: '#82E0AA' }
           ].map((universe, index) => (
             <Grid item xs={6} sm={4} md={3} key={index}>
-              <Card
-                sx={{
-                  p: 2,
-                  textAlign: 'center',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  border: `2px solid ${universe.color}`,
-                  '&:hover': {
-                    transform: 'translateY(-4px)',
-                    boxShadow: 4,
-                    bgcolor: `${universe.color}10`
-                  }
-                }}
-              >
+                  <Card
+                    sx={{
+                      p: 3,
+                      textAlign: 'center',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      border: `2px solid ${universe.color}`,
+                      borderRadius: 3,
+                      '&:hover': {
+                        transform: 'translateY(-6px)',
+                        boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)',
+                        bgcolor: `${universe.color}15`
+                      }
+                    }}
+                  >
                 <Typography variant="h6" sx={{ color: universe.color, fontWeight: 'bold' }}>
                   {universe.name}
                 </Typography>
@@ -239,18 +275,20 @@ const LandingPage: React.FC = () => {
         <Grid container spacing={4}>
           {features.map((feature, index) => (
             <Grid item xs={12} md={6} key={index}>
-              <Card
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'all 0.3s ease',
-                  '&:hover': {
-                    transform: 'translateY(-4px)',
-                    boxShadow: 4
-                  }
-                }}
-              >
+                  <Card
+                    sx={{
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      borderRadius: 3,
+                      border: '1px solid rgba(0, 0, 0, 0.05)',
+                      '&:hover': {
+                        transform: 'translateY(-8px)',
+                        boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
+                      }
+                    }}
+                  >
                 <CardContent sx={{ flexGrow: 1, p: 4 }}>
                   <Box sx={{ textAlign: 'center', mb: 3 }}>
                     {feature.icon}

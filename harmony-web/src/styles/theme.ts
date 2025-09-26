@@ -1,42 +1,241 @@
-import { Theme } from '@/types';
+import { createTheme } from '@mui/material/styles';
 
-// Deutsche Farben - warm und vertrauensvoll
-export const harmonyTheme: Theme = {
-  colors: {
-    // Hauptfarben
-    primary: '#4A90E2',      // Warmes Blau
-    secondary: '#7ED321',    // Vertrauensvolles Grün
-    success: '#7ED321',      // Grün für Likes
-    error: '#E74C3C',        // Rot für Dislikes
-    warning: '#F39C12',      // Orange für Warnungen
-    
-    // Hintergrundfarben
-    background: '#F8F9FA',   // Heller Hintergrund
-    surface: '#FFFFFF',      // Weiß für Karten
-    
-    // Textfarben
-    text: '#2C3E50',         // Dunkelgrau für Text
-  },
-  
-  spacing: {
-    xs: '4px',
-    sm: '8px',
-    md: '16px',
-    lg: '24px',
-    xl: '32px',
+// Harmony Design System - Professionell & Modern
+export const harmonyTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#C80026',        // Harmony Rot
+      light: '#E53E3E',       // Heller Rot
+      dark: '#8B0000',        // Dunkler Rot
+      contrastText: '#FFFFFF',
+    },
+    secondary: {
+      main: '#2D3A42',        // Dunkelgrau
+      light: '#4A5568',       // Heller Grau
+      dark: '#1A202C',       // Sehr dunkel
+      contrastText: '#FFFFFF',
+    },
+    success: {
+      main: '#48BB78',        // Modernes Grün
+      light: '#68D391',
+      dark: '#38A169',
+    },
+    error: {
+      main: '#F56565',        // Modernes Rot
+      light: '#FC8181',
+      dark: '#E53E3E',
+    },
+    warning: {
+      main: '#ED8936',        // Modernes Orange
+      light: '#F6AD55',
+      dark: '#DD6B20',
+    },
+    info: {
+      main: '#4299E1',        // Modernes Blau
+      light: '#63B3ED',
+      dark: '#3182CE',
+    },
+    background: {
+      default: '#F7FAFC',     // Sehr helles Grau
+      paper: '#FFFFFF',       // Weiß für Karten
+    },
+    text: {
+      primary: '#2D3748',     // Dunkelgrau
+      secondary: '#718096',   // Mittleres Grau
+    },
+    grey: {
+      50: '#F7FAFC',
+      100: '#EDF2F7',
+      200: '#E2E8F0',
+      300: '#CBD5E0',
+      400: '#A0AEC0',
+      500: '#718096',
+      600: '#4A5568',
+      700: '#2D3748',
+      800: '#1A202C',
+      900: '#171923',
+    },
   },
   
   typography: {
     fontFamily: '"Inter", "Helvetica Neue", Arial, sans-serif',
-    fontSize: {
-      xs: '12px',
-      sm: '14px',
-      md: '16px',
-      lg: '18px',
-      xl: '24px',
+    h1: {
+      fontSize: '2.5rem',
+      fontWeight: 700,
+      lineHeight: 1.2,
+      letterSpacing: '-0.025em',
+    },
+    h2: {
+      fontSize: '2rem',
+      fontWeight: 600,
+      lineHeight: 1.3,
+      letterSpacing: '-0.025em',
+    },
+    h3: {
+      fontSize: '1.75rem',
+      fontWeight: 600,
+      lineHeight: 1.4,
+    },
+    h4: {
+      fontSize: '1.5rem',
+      fontWeight: 600,
+      lineHeight: 1.4,
+    },
+    h5: {
+      fontSize: '1.25rem',
+      fontWeight: 600,
+      lineHeight: 1.5,
+    },
+    h6: {
+      fontSize: '1.125rem',
+      fontWeight: 600,
+      lineHeight: 1.5,
+    },
+    body1: {
+      fontSize: '1rem',
+      lineHeight: 1.6,
+    },
+    body2: {
+      fontSize: '0.875rem',
+      lineHeight: 1.6,
+    },
+    button: {
+      fontSize: '1rem',
+      fontWeight: 600,
+      textTransform: 'none',
+      letterSpacing: '0.025em',
+    },
+    caption: {
+      fontSize: '0.75rem',
+      lineHeight: 1.5,
     },
   },
-};
+  
+  shape: {
+    borderRadius: 12,        // Moderne, abgerundete Ecken
+  },
+  
+  spacing: 8,                // 8px Basis-Spacing
+  
+  shadows: [
+    'none',
+    '0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)',
+    '0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06)',
+    '0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)',
+    '0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+    '0 25px 50px rgba(0, 0, 0, 0.25)',
+  ],
+  
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+          padding: '12px 24px',
+          fontSize: '1rem',
+          fontWeight: 600,
+          textTransform: 'none',
+          boxShadow: 'none',
+          '&:hover': {
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
+            transform: 'translateY(-1px)',
+          },
+        },
+        contained: {
+          '&:hover': {
+            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+          },
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 16,
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
+          border: '1px solid rgba(0, 0, 0, 0.05)',
+          '&:hover': {
+            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+            transform: 'translateY(-2px)',
+          },
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            borderRadius: 12,
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#C80026',
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#C80026',
+              borderWidth: 2,
+            },
+          },
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+          fontWeight: 500,
+        },
+      },
+    },
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          fontWeight: 600,
+        },
+      },
+    },
+    MuiBottomNavigation: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#FFFFFF',
+          borderTop: '1px solid rgba(0, 0, 0, 0.05)',
+          '& .MuiBottomNavigationAction-root': {
+            '&.Mui-selected': {
+              color: '#C80026',
+            },
+          },
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#FFFFFF',
+          color: '#2D3748',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+        },
+      },
+    },
+  },
+});
 
 // Dark Mode Theme
 export const harmonyDarkTheme: Theme = {

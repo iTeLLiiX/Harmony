@@ -152,10 +152,11 @@ const Premium: React.FC = () => {
                   border: plan.popular ? `3px solid ${plan.color}` : '1px solid',
                   borderColor: plan.popular ? plan.color : 'divider',
                   transform: plan.popular ? 'scale(1.05)' : 'scale(1)',
-                  transition: 'all 0.3s ease',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  borderRadius: 3,
                   '&:hover': {
-                    transform: 'scale(1.02)',
-                    boxShadow: 4
+                    transform: plan.popular ? 'scale(1.08)' : 'scale(1.05)',
+                    boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
                   }
                 }}
               >
@@ -212,12 +213,16 @@ const Premium: React.FC = () => {
                       bgcolor: plan.popular ? plan.color : 'transparent',
                       color: plan.popular ? 'white' : plan.color,
                       borderColor: plan.color,
-                      py: 2,
-                      fontSize: '16px',
-                      fontWeight: 'bold',
+                      py: 3,
+                      fontSize: '1.125rem',
+                      fontWeight: 700,
+                      borderRadius: 3,
+                      height: 56,
                       '&:hover': {
                         bgcolor: plan.color,
-                        color: 'white'
+                        color: 'white',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)'
                       }
                     }}
                   >

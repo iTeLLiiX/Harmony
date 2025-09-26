@@ -30,63 +30,8 @@ import Tutorial from './components/Tutorial';
 // Styles
 import './styles/globals.css';
 
-// MUI Theme für deutsche Benutzerfreundlichkeit
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#4A90E2',
-    },
-    secondary: {
-      main: '#7ED321',
-    },
-    success: {
-      main: '#7ED321',
-    },
-    error: {
-      main: '#E74C3C',
-    },
-  },
-  typography: {
-    fontFamily: '"Inter", "Helvetica Neue", Arial, sans-serif',
-    h1: {
-      fontSize: '2.5rem',
-      fontWeight: 600,
-    },
-    h2: {
-      fontSize: '2rem',
-      fontWeight: 600,
-    },
-    h3: {
-      fontSize: '1.75rem',
-      fontWeight: 600,
-    },
-    button: {
-      fontSize: '16px',
-      fontWeight: 600,
-      textTransform: 'none',
-    },
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          minHeight: '48px',
-          borderRadius: '8px',
-          padding: '14px 24px',
-        },
-      },
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          '& .MuiOutlinedInput-root': {
-            minHeight: '48px',
-          },
-        },
-      },
-    },
-  },
-});
+// Import des einheitlichen Harmony Themes
+import { harmonyTheme } from './styles/theme';
 
 // React Query Client für API-Calls
 const queryClient = new QueryClient({
@@ -117,8 +62,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={harmonyTheme}>
         <Router>
           <div className="app">
             {/* Tutorial Overlay */}
