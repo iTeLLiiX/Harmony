@@ -30,8 +30,9 @@ import Tutorial from './components/Tutorial';
 // Styles
 import './styles/globals.css';
 
-// Import des einheitlichen Harmony Themes
-import { harmonyTheme } from './styles/theme';
+// Import des Premium Harmony Themes
+import { premiumHarmonyTheme } from './styles/premiumTheme';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 // React Query Client für API-Calls
 const queryClient = new QueryClient({
@@ -63,7 +64,7 @@ const App: React.FC = () => {
 
   return (
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={harmonyTheme}>
+          <ThemeProvider>
         <Router>
           <div className="app">
             {/* Tutorial Overlay */}

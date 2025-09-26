@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Box, 
@@ -9,7 +9,8 @@ import {
   CardContent,
   Grid,
   IconButton,
-  useTheme
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import {
   MusicNote,
@@ -17,14 +18,37 @@ import {
   Movie,
   Favorite,
   Security,
-  Help
+  Help,
+  Star,
+  TrendingUp,
+  People,
+  Chat
 } from '@mui/icons-material';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import Logo from '../components/Logo';
+import { 
+  PremiumButton, 
+  PremiumCard, 
+  FloatingActionButton,
+  fadeInUp,
+  staggerContainer,
+  scaleIn,
+  slideInFromRight,
+  slideInFromLeft,
+  ParallaxSection
+} from '../components/animations/AdvancedAnimations';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [showHelp, setShowHelp] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 300], [0, -50]);
+  const y2 = useTransform(scrollY, [0, 300], [0, -100]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0.8]);
 
   const handleRegistrierung = () => {
     navigate('/registrierung');
