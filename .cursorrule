@@ -1,0 +1,700 @@
+# Dating App "Harmony" - Deutsche Entwicklungsregeln
+
+## 🎯 PROJEKTÜBERSICHT
+Du entwickelst eine deutsche Dating App namens "Harmony" mit Fokus auf:
+- **Benutzerfreundlichkeit für ALLE Altersgruppen** (18-99 Jahre)
+- **Interesse-basiertes Matching** (Musik, Sport, Filme, Hobbys)
+- **Android App + Web-Anwendung** (React/Vue für Web)
+- **Deutsche Kultur und Sprache** (DSGVO-konform)
+
+## 🏗️ PROJEKTSTRUKTUR
+
+### Frontend (Web)
+```
+/harmony-web/
+├── /src/
+│   ├── /components/          # React/Vue Komponenten
+│   │   ├── /auth/           # Login/Registrierung
+│   │   ├── /profile/        # Profil-Management
+│   │   ├── /matching/       # Swipe-System
+│   │   ├── /chat/           # Chat-Funktionen
+│   │   └── /settings/       # Einstellungen
+│   ├── /pages/              # Hauptseiten
+│   ├── /services/           # API-Services
+│   ├── /utils/              # Hilfsfunktionen
+│   └── /styles/             # CSS/SCSS
+├── /public/                 # Statische Assets
+└── package.json
+```
+
+### Backend (Node.js/Express)
+```
+/harmony-backend/
+├── /src/
+│   ├── /controllers/        # API Controller
+│   ├── /models/            # Datenbank-Modelle
+│   ├── /routes/             # API Routes
+│   ├── /middleware/         # Auth, Validation
+│   ├── /services/           # Business Logic
+│   └── /utils/              # Hilfsfunktionen
+├── /config/                 # Datenbank, Umgebungsvariablen
+└── package.json
+```
+
+### Android App (Kotlin)
+```
+/harmony-android/
+├── /app/src/main/
+│   ├── /java/com/harmony/
+│   │   ├── /ui/             # Activities & Fragments
+│   │   ├── /data/           # Repository, API
+│   │   ├── /models/         # Data Classes
+│   │   └── /utils/          # Hilfsfunktionen
+│   ├── /res/                # Layouts, Drawables, Strings
+│   └── /AndroidManifest.xml
+└── build.gradle
+```
+
+## 🎨 DESIGN-PRINZIPIEN
+
+### Benutzerfreundlichkeit (PRIORITÄT #1)
+- **Große Buttons** (min. 48dp Touch-Target)
+- **Klare Icons** mit deutschen Text-Labels
+- **Einfache Navigation** (max. 5 Hauptbereiche)
+- **Große Schrift-Option** für alle Altersgruppen
+- **Hilfe-Button** auf jeder Seite sichtbar
+- **Tutorial** kann nicht übersprungen werden
+
+### Farbschema
+- **Hauptfarbe**: Warmes Blau/Grün (#4A90E2 / #7ED321)
+- **Like-Button**: Grün (#7ED321)
+- **Dislike-Button**: Rot (#E74C3C)
+- **Heller Hintergrund**: #F8F9FA
+- **Dark Mode**: Optional verfügbar
+- **Hoher Kontrast**: Für Sehschwäche
+
+### Deutsche Besonderheiten
+- **Tatort-Präferenz** (wichtig für deutsche Nutzer!)
+- **Bundesliga-Vereine** mit Vereins-Logos
+- **Deutsche vs. internationale** Musik/Filme
+- **Regionale Unterschiede** (Nord/Süd) beachten
+
+## 🔧 ENTWICKLUNGSREGELN
+
+### Code-Standards
+```javascript
+// JavaScript/TypeScript
+- Verwende deutsche Kommentare
+- Funktionen in camelCase
+- Konstanten in UPPER_CASE
+- Immer try-catch für API-Calls
+- JSDoc für alle Funktionen
+
+// Beispiel:
+/**
+ * Lädt Benutzerprofil mit allen Interessen
+ * @param {string} userId - Eindeutige Benutzer-ID
+ * @returns {Promise<UserProfile>} Vollständiges Benutzerprofil
+ */
+async function ladeBenutzerProfil(userId) {
+  try {
+    const response = await api.get(`/profile/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Fehler beim Laden des Profils:', error);
+    throw new Error('Profil konnte nicht geladen werden');
+  }
+}
+```
+
+```kotlin
+// Kotlin (Android)
+- Deutsche Kommentare und Variablennamen
+- Data Classes für API-Modelle
+- Repository Pattern für Datenzugriff
+- Coroutines für asynchrone Operationen
+
+// Beispiel:
+data class BenutzerProfil(
+    val id: String,
+    val name: String,
+    val alter: Int,
+    val interessen: List<Interesse>,
+    val musikGeschmack: MusikGeschmack
+)
+
+class ProfilRepository {
+    suspend fun ladeBenutzerProfil(userId: String): Result<BenutzerProfil> {
+        return try {
+            val profil = apiService.getProfil(userId)
+            Result.success(profil)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+}
+```
+
+### Datenbank-Schema (MongoDB/PostgreSQL)
+```sql
+-- Benutzer-Tabelle
+CREATE TABLE benutzer (
+    id UUID PRIMARY KEY,
+    handynummer VARCHAR(20) UNIQUE,
+    email VARCHAR(255) UNIQUE,
+    name VARCHAR(100) NOT NULL,
+    alter INTEGER NOT NULL,
+    geschlecht VARCHAR(20) NOT NULL,
+    sucht_geschlecht VARCHAR(20) NOT NULL,
+    plz VARCHAR(10) NOT NULL,
+    entfernung_km INTEGER DEFAULT 50,
+    profil_vollstaendig BOOLEAN DEFAULT FALSE,
+    verifiziert BOOLEAN DEFAULT FALSE,
+    erstellt_am TIMESTAMP DEFAULT NOW()
+);
+
+-- Interessen-Tabelle
+CREATE TABLE interessen (
+    id UUID PRIMARY KEY,
+    benutzer_id UUID REFERENCES benutzer(id),
+    kategorie VARCHAR(50) NOT NULL, -- 'musik', 'sport', 'film', 'hobby'
+    wert VARCHAR(100) NOT NULL,
+    gewichtung INTEGER DEFAULT 1
+);
+
+-- Matches-Tabelle
+CREATE TABLE matches (
+    id UUID PRIMARY KEY,
+    benutzer1_id UUID REFERENCES benutzer(id),
+    benutzer2_id UUID REFERENCES benutzer(id),
+    match_score INTEGER NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending', -- 'pending', 'matched', 'blocked'
+    erstellt_am TIMESTAMP DEFAULT NOW()
+);
+```
+
+## 🎵 MUSIK-MATCHING SYSTEM
+
+### Implementierung
+```javascript
+// Musik-Interessen erfassen
+const musikInteressen = {
+  genres: ['Pop', 'Rock', 'Schlager', 'Hip-Hop', 'Klassik'],
+  lieblingsKuenstler: ['Ed Sheeran', 'Adele', 'Die Ärzte'],
+  streamingDienste: ['Spotify', 'Apple Music', 'Amazon Music'],
+  konzertInteresse: true,
+  musikrichtungSlider: 7, // 1-10 (Klassik bis Metal)
+  deutschVsInternational: 'beides' // 'deutsch', 'international', 'beides'
+};
+
+// Matching-Algorithmus
+function berechneMusikMatch(profil1, profil2) {
+  let score = 0;
+  
+  // Gemeinsame Genres
+  const gemeinsameGenres = profil1.genres.filter(g => profil2.genres.includes(g));
+  score += gemeinsameGenres.length * 20;
+  
+  // Gemeinsame Künstler
+  const gemeinsameKuenstler = profil1.lieblingsKuenstler.filter(k => 
+    profil2.lieblingsKuenstler.includes(k)
+  );
+  score += gemeinsameKuenstler.length * 30;
+  
+  // Streaming-Dienste
+  if (profil1.streamingDienste.some(d => profil2.streamingDienste.includes(d))) {
+    score += 15;
+  }
+  
+  return Math.min(score, 100);
+}
+```
+
+## ⚽ SPORT & HOBBY MATCHING
+
+### Sport-Interessen
+```javascript
+const sportInteressen = {
+  lieblingsSport: 'Fußball',
+  bundesligaVerein: 'Bayern München',
+  sportMachen: true,
+  sportImTV: true,
+  fitnessLevel: 7, // 1-10 Slider
+  stadionBesuche: true,
+  outdoorVsIndoor: 'beides'
+};
+
+const hobbyInteressen = {
+  kochen: { interesse: true, skillLevel: 5 },
+  reisen: { interesse: true, praeferenz: 'fern' },
+  gaming: { interesse: true, konsole: 'PlayStation' },
+  lesen: { interesse: true, genres: ['Krimi', 'Romane'] },
+  handwerk: { interesse: false },
+  gartenarbeit: { interesse: true },
+  haustiere: { status: 'habe', art: 'Hund' },
+  fotografieren: { interesse: true, level: 'handy' }
+};
+```
+
+## 🎬 FILM & SERIEN MATCHING
+
+### Film-Präferenzen
+```javascript
+const filmInteressen = {
+  streamingDienste: ['Netflix', 'Amazon Prime'],
+  tvProgramme: ['ARD', 'ZDF', 'RTL'],
+  kinoGanger: 'gelegentlich',
+  lieblingsGenres: ['Komödie', 'Action', 'Romantik'],
+  deutschVsInternational: 'beides',
+  serienVsFilme: 'beides',
+  tatortSchauen: true, // WICHTIG für deutsche Nutzer!
+  dokumentationen: true,
+  kinoDate: true,
+  heimkinoVsKino: 'kino'
+};
+```
+
+## 👤 PROFIL & REGISTRIERUNG
+
+### Einfache Anmeldung
+```javascript
+// Registrierung mit Handynummer
+const registrierung = {
+  handynummer: '+49123456789',
+  smsCode: '123456',
+  email: 'user@example.com', // Optional
+  name: 'Max Mustermann',
+  alter: 28,
+  geschlecht: 'männlich',
+  suchtGeschlecht: 'weiblich',
+  plz: '80331',
+  entfernung: 25,
+  wasSuchst: 'Beziehung'
+};
+
+// Profil vervollständigen
+const profilVervollstaendigung = {
+  // Basis-Informationen
+  beruf: 'Softwareentwickler',
+  lebensstil: {
+    raucher: 'nein',
+    alkohol: 'gelegentlich',
+    kinder: 'möchte',
+    haustiere: 'habe',
+    auto: 'habe',
+    wohnsituation: 'eigene_wohnung'
+  },
+  
+  // Interessen
+  musik: musikInteressen,
+  sport: sportInteressen,
+  hobby: hobbyInteressen,
+  film: filmInteressen,
+  
+  // Fotos
+  profilfotos: [
+    { url: 'foto1.jpg', istHauptfoto: true },
+    { url: 'foto2.jpg', istHauptfoto: false }
+  ]
+};
+```
+
+## 📱 ANDROID APP ENTWICKLUNG
+
+### Projekt-Setup
+```kotlin
+// build.gradle (Module: app)
+dependencies {
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    
+    // Navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    
+    // Networking
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+    
+    // Image Loading
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    
+    // ViewModel
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+}
+```
+
+### Activity-Struktur
+```kotlin
+// Haupt-Activities
+class MainActivity : AppCompatActivity() {
+    // Hauptnavigation zwischen Fragmenten
+}
+
+class RegistrierungActivity : AppCompatActivity() {
+    // Schritt-für-Schritt Registrierung
+}
+
+class ProfilActivity : AppCompatActivity() {
+    // Profil bearbeiten und vervollständigen
+}
+
+class MatchingActivity : AppCompatActivity() {
+    // Swipe-System für Matches
+}
+
+class ChatActivity : AppCompatActivity() {
+    // Chat-Funktionalität
+}
+```
+
+## 🌐 WEB-ANWENDUNG (React)
+
+### Projekt-Setup
+```json
+// package.json
+{
+  "name": "harmony-web",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0",
+    "axios": "^1.3.0",
+    "styled-components": "^5.3.6",
+    "@mui/material": "^5.11.0",
+    "@mui/icons-material": "^5.11.0"
+  }
+}
+```
+
+### Komponenten-Struktur
+```jsx
+// Haupt-Komponenten
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/registrierung" element={<Registrierung />} />
+        <Route path="/profil" element={<Profil />} />
+        <Route path="/matching" element={<Matching />} />
+        <Route path="/chat" element={<Chat />} />
+      </Routes>
+    </Router>
+  );
+};
+
+// Beispiel: Matching-Komponente
+const Matching = () => {
+  const [aktuellePerson, setAktuellePerson] = useState(null);
+  const [matches, setMatches] = useState([]);
+
+  const handleLike = async (personId) => {
+    try {
+      await api.post('/matches/like', { personId });
+      ladeNaechstePerson();
+    } catch (error) {
+      console.error('Fehler beim Liken:', error);
+    }
+  };
+
+  return (
+    <div className="matching-container">
+      <PersonCard 
+        person={aktuellePerson}
+        onLike={() => handleLike(aktuellePerson.id)}
+        onDislike={() => ladeNaechstePerson()}
+      />
+    </div>
+  );
+};
+```
+
+## 🔒 SICHERHEIT & DSGVO
+
+### Datenschutz-Implementierung
+```javascript
+// DSGVO-konforme Datenverarbeitung
+const datenschutz = {
+  // Einwilligung erfassen
+  einwilligungErfasst: true,
+  datenVerarbeitung: {
+    profil: true,
+    matching: true,
+    chat: true,
+    analytics: false
+  },
+  
+  // Datenlöschung
+  datenLoeschen: async (userId) => {
+    await api.delete(`/benutzer/${userId}/daten`);
+  },
+  
+  // Datenexport
+  datenExportieren: async (userId) => {
+    const daten = await api.get(`/benutzer/${userId}/export`);
+    return daten;
+  }
+};
+```
+
+### Sicherheitsmaßnahmen
+```javascript
+// API-Sicherheit
+const sicherheit = {
+  // JWT Token für Authentifizierung
+  token: localStorage.getItem('harmony_token'),
+  
+  // Verschlüsselung für sensible Daten
+  verschluesseln: (daten) => {
+    return CryptoJS.AES.encrypt(JSON.stringify(daten), 'geheim').toString();
+  },
+  
+  // Sichere API-Calls
+  apiCall: async (endpoint, daten) => {
+    const token = localStorage.getItem('harmony_token');
+    return axios.post(endpoint, daten, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+  }
+};
+```
+
+## 🚀 ENTWICKLUNGSPHASEN
+
+### Phase 1 - MVP (Minimum Viable Product)
+1. **Registrierung** (Handy + Email)
+2. **Basis-Profil** (Foto, Alter, Interessen)
+3. **Musik-Geschmack** (einfach)
+4. **Swipe-System** mit großen Buttons
+5. **Chat-System** (Text + Emoji)
+6. **Blockieren/Melden** Funktion
+7. **PLZ-basierte Umkreis-Suche**
+
+### Phase 2 - Erweiterte Features
+1. **Premium-Version** (9,99€/Monat)
+2. **Sport-Matching** hinzufügen
+3. **Film-Präferenzen** erweitern
+4. **Gruppen-Feature** für gemeinsame Interessen
+5. **Event-Vorschläge** in der Nähe
+
+### Phase 3 - Community Features
+1. **Lokale Events** organisieren
+2. **Erfolgsgeschichten** teilen
+3. **Dating-Tipps** und Ratgeber
+4. **Partnerschaften** mit lokalen Unternehmen
+
+## 📊 TESTING & QUALITÄTSSICHERUNG
+
+### Test-Strategie
+```javascript
+// Unit Tests (Jest)
+describe('Matching-Algorithmus', () => {
+  test('sollte gemeinsame Interessen korrekt berechnen', () => {
+    const profil1 = { musik: ['Pop', 'Rock'] };
+    const profil2 = { musik: ['Pop', 'Jazz'] };
+    const score = berechneMusikMatch(profil1, profil2);
+    expect(score).toBe(20); // Ein gemeinsames Genre
+  });
+});
+
+// Integration Tests
+describe('API-Endpoints', () => {
+  test('sollte Benutzerprofil erfolgreich laden', async () => {
+    const response = await api.get('/profil/123');
+    expect(response.status).toBe(200);
+    expect(response.data).toHaveProperty('name');
+  });
+});
+```
+
+### Benutzerfreundlichkeit testen
+- **Senioren-Test-Gruppe** (55+) für Benutzerfreundlichkeit
+- **Technische Laien** als Tester
+- **Alle Altersgruppen** (18-99 Jahre)
+- **Barrierefreiheit** (Sehschwäche, etc.)
+
+## 🎯 WICHTIGE ENTWICKLER-NOTIZEN
+
+### Immer beachten:
+1. **Jede Funktion** muss ein 70-Jähriger verstehen können
+2. **Jeder Klick** muss intuitiv sein
+3. **Fehlermeldungen** in einfachem Deutsch
+4. **Hilfe-System** auf jeder Seite
+5. **Tutorial** kann nicht übersprungen werden
+6. **Beta-Tester** aus ALLEN Altersgruppen
+
+### Deutsche Besonderheiten:
+- **DSGVO-konform** (Datenschutz-Erklärung verständlich)
+- **Deutsche Server** (Datenschutz)
+- **Lokale Bezahlmethoden** (SEPA, PayPal)
+- **Deutsche Kulturverständnis** (Direktheit, Ehrlichkeit)
+- **Regionale Unterschiede** beachten (Nord/Süd)
+
+### Technische Stabilität:
+- **Niemals abstürzen** (Exception-Handling überall)
+- **Offline-Modus** für Basis-Funktionen
+- **Automatische Fehlerberichterstattung**
+- **Regelmäßige Backups** aller Daten
+- **Schnelle Ladezeiten** auch bei schlechtem Internet
+
+## 📱 RESPONSIVE DESIGN
+
+### Breakpoints
+```css
+/* Mobile First */
+@media (max-width: 768px) {
+  .button { min-height: 48px; }
+  .text { font-size: 16px; }
+}
+
+@media (min-width: 769px) {
+  .container { max-width: 1200px; }
+}
+
+@media (min-width: 1024px) {
+  .sidebar { width: 300px; }
+}
+```
+
+### Touch-Targets
+```css
+/* Mindestens 48px für Touch-Targets */
+.button, .link, .input {
+  min-height: 48px;
+  min-width: 48px;
+  padding: 12px 16px;
+}
+```
+
+## 🎨 UI/UX PATTERNS
+
+### Navigation
+```jsx
+// Hauptnavigation (max. 5 Bereiche)
+const Navigation = () => (
+  <nav className="main-navigation">
+    <NavItem icon="home" label="Start" />
+    <NavItem icon="search" label="Entdecken" />
+    <NavItem icon="chat" label="Chats" />
+    <NavItem icon="profile" label="Profil" />
+    <NavItem icon="settings" label="Einstellungen" />
+  </nav>
+);
+```
+
+### Swipe-System
+```jsx
+// Große Swipe-Buttons zusätzlich zur Wisch-Geste
+const SwipeButtons = ({ onLike, onDislike }) => (
+  <div className="swipe-buttons">
+    <button className="dislike-btn" onClick={onDislike}>
+      <Icon name="close" size="large" />
+      <span>Mag ich nicht</span>
+    </button>
+    <button className="like-btn" onClick={onLike}>
+      <Icon name="heart" size="large" />
+      <span>Mag ich</span>
+    </button>
+  </div>
+);
+```
+
+## 💰 PREMIUM-FEATURES
+
+### Kostenlos vs. Premium
+```javascript
+const premiumFeatures = {
+  kostenlos: {
+    likesProTag: 5,
+    basisMatching: true,
+    chat: true,
+    profilBearbeiten: true
+  },
+  premium: {
+    unbegrenzteLikes: true,
+    sehenWerMichGeliketHat: true,
+    erweiterteSuche: true,
+    profilBoost: true,
+    keineWerbung: true,
+    preis: '9,99€/Monat'
+  }
+};
+```
+
+## 🔧 DEPLOYMENT & HOSTING
+
+### Web-App (Vercel/Netlify)
+```json
+// vercel.json
+{
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
+```
+
+### Android App (Google Play Store)
+```gradle
+// build.gradle
+android {
+    compileSdkVersion 33
+    defaultConfig {
+        applicationId "com.harmony.dating"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0.0"
+    }
+}
+```
+
+## 📈 ANALYTICS & MONITORING
+
+### Benutzer-Tracking
+```javascript
+// Google Analytics 4
+gtag('config', 'GA_MEASUREMENT_ID', {
+  custom_map: {
+    'custom_parameter_1': 'musik_interesse',
+    'custom_parameter_2': 'sport_interesse'
+  }
+});
+
+// Custom Events
+gtag('event', 'match_erstellt', {
+  match_score: 85,
+  gemeinsame_interessen: 3
+});
+```
+
+## 🎯 ZUSAMMENFASSUNG
+
+Diese .cursorrule definiert die komplette Entwicklung einer deutschen Dating App "Harmony" mit:
+
+✅ **Benutzerfreundlichkeit** für alle Altersgruppen
+✅ **Interesse-basiertes Matching** (Musik, Sport, Filme, Hobbys)
+✅ **Android + Web** Implementierung
+✅ **Deutsche Kultur** und DSGVO-Konformität
+✅ **Klare Projektstruktur** und Entwicklungsregeln
+✅ **Detaillierte Code-Beispiele** für alle Features
+✅ **Test-Strategien** und Qualitätssicherung
+
+**WICHTIG**: Halte dich strikt an diese Regeln und entwickle immer mit dem Fokus auf maximale Benutzerfreundlichkeit für deutsche Nutzer aller Altersgruppen!
