@@ -19,7 +19,8 @@ import {
   Person,
   Settings,
   Notifications,
-  Help
+  Help,
+  Forum
 } from '@mui/icons-material';
 import Logo from './Logo';
 
@@ -64,6 +65,12 @@ const Navigation: React.FC = () => {
       value: '/matching',
       label: 'Entdecken',
       icon: <Search />,
+      badge: 0
+    },
+    {
+      value: '/community',
+      label: 'Community',
+      icon: <Forum />,
       badge: 0
     },
     {

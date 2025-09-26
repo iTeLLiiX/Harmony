@@ -110,12 +110,22 @@ const LandingPage: React.FC = () => {
             <Logo size="large" color="white" />
           </Box>
           <Typography variant="h3" component="h2" gutterBottom sx={{ mb: 4 }}>
-            Das echte Leben spielt hier.
+            Wir stehen für Liebe. 💕
           </Typography>
           <Typography variant="h6" sx={{ mb: 6, maxWidth: 600, mx: 'auto' }}>
-            Finde deine große Liebe basierend auf gemeinsamen Interessen. 
+            Finde deine große Liebe basierend auf Persönlichkeit und gemeinsamen Interessen. 
             Benutzerfreundlich für alle Altersgruppen (18-99 Jahre).
           </Typography>
+          
+          {/* Social Proof wie bei Boo */}
+          <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4, flexWrap: 'wrap' }}>
+            <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'white' }}>
+              50.000+ Downloads
+            </Typography>
+            <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.8)' }}>
+              Jetzt beitreten
+            </Typography>
+          </Box>
           
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button
@@ -164,6 +174,58 @@ const LandingPage: React.FC = () => {
           </Box>
         </Container>
       </Box>
+
+      {/* Interessen-Universen wie bei Boo */}
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        <Typography variant="h2" component="h2" textAlign="center" gutterBottom>
+          Entdecke deine Interessen-Universen
+        </Typography>
+        <Typography variant="h6" textAlign="center" color="text.secondary" sx={{ mb: 6 }}>
+          Finde Menschen mit ähnlichen Leidenschaften und Hobbys
+        </Typography>
+        
+        {/* Universen Grid */}
+        <Grid container spacing={2} sx={{ mb: 8 }}>
+          {[
+            { name: '#music', count: '11 Mio. Seelen', color: '#FF6B6B' },
+            { name: '#gaming', count: '9,8 Mio. Seelen', color: '#4ECDC4' },
+            { name: '#movies', count: '8,4 Mio. Seelen', color: '#45B7D1' },
+            { name: '#anime', count: '6,9 Mio. Seelen', color: '#96CEB4' },
+            { name: '#food', count: '6,6 Mio. Seelen', color: '#FFEAA7' },
+            { name: '#memes', count: '4,5 Mio. Seelen', color: '#DDA0DD' },
+            { name: '#outdoors', count: '4 Mio. Seelen', color: '#98D8C8' },
+            { name: '#technology', count: '2,9 Mio. Seelen', color: '#F7DC6F' },
+            { name: '#art', count: '2,8 Mio. Seelen', color: '#BB8FCE' },
+            { name: '#animals', count: '2,8 Mio. Seelen', color: '#85C1E9' },
+            { name: '#books', count: '2,7 Mio. Seelen', color: '#F8C471' },
+            { name: '#learning', count: '2,3 Mio. Seelen', color: '#82E0AA' }
+          ].map((universe, index) => (
+            <Grid item xs={6} sm={4} md={3} key={index}>
+              <Card
+                sx={{
+                  p: 2,
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  border: `2px solid ${universe.color}`,
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: 4,
+                    bgcolor: `${universe.color}10`
+                  }
+                }}
+              >
+                <Typography variant="h6" sx={{ color: universe.color, fontWeight: 'bold' }}>
+                  {universe.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {universe.count}
+                </Typography>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
 
       {/* Features Section */}
       <Container maxWidth="lg" sx={{ py: 8 }}>

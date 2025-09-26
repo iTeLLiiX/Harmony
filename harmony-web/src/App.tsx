@@ -13,6 +13,8 @@ import Profil from './pages/Profil';
 import Matching from './pages/Matching';
 import Chat from './pages/Chat';
 import Einstellungen from './pages/Einstellungen';
+import Community from './pages/Community';
+import Persoenlichkeitstest from './pages/Persoenlichkeitstest';
 
 // Components
 import Navigation from './components/Navigation';
@@ -152,6 +154,14 @@ const App: React.FC = () => {
                   element={
                     isAuthenticated ? <Einstellungen /> : <LandingPage />
                   } 
+                />
+                <Route 
+                  path="/community" 
+                  element={<Community />}
+                />
+                <Route 
+                  path="/persoenlichkeitstest" 
+                  element={<Persoenlichkeitstest />}
                 />
               </Routes>
             </main>
