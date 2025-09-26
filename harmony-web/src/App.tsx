@@ -18,6 +18,10 @@ import Persoenlichkeitstest from './pages/Persoenlichkeitstest';
 import Sicherheit from './pages/Sicherheit';
 import FAQ from './pages/FAQ';
 import Onboarding from './pages/Onboarding';
+import Premium from './pages/Premium';
+import Verification from './pages/Verification';
+import Events from './pages/Events';
+import Analytics from './pages/Analytics';
 
 // Components
 import Navigation from './components/Navigation';
@@ -177,6 +181,22 @@ const App: React.FC = () => {
                 <Route 
                   path="/onboarding" 
                   element={<Onboarding />}
+                />
+                <Route 
+                  path="/premium" 
+                  element={<Premium />}
+                />
+                <Route 
+                  path="/verification" 
+                  element={<Verification />}
+                />
+                <Route 
+                  path="/events" 
+                  element={<Events />}
+                />
+                <Route 
+                  path="/analytics" 
+                  element={<Analytics />}
                 />
               </Routes>
             </main>

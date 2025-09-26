@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   BottomNavigation,
@@ -10,7 +10,8 @@ import {
   Menu,
   MenuItem,
   Typography,
-  Divider
+  Divider,
+  Button
 } from '@mui/material';
 import {
   Home,
@@ -20,8 +21,12 @@ import {
   Settings,
   Notifications,
   Help,
-  Forum
+  Forum,
+  Diamond,
+  Event,
+  Analytics
 } from '@mui/icons-material';
+import NotificationCenter from './NotificationCenter';
 import Logo from './Logo';
 
 const Navigation: React.FC = () => {
@@ -29,6 +34,7 @@ const Navigation: React.FC = () => {
   const location = useLocation();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [showHelp, setShowHelp] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   // Mock data für Benachrichtigungen
   const [notifications] = React.useState(3);
@@ -115,7 +121,10 @@ const Navigation: React.FC = () => {
         {/* Right Side Actions */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           {/* Benachrichtigungen */}
-          <IconButton color="inherit">
+          <IconButton 
+            color="inherit"
+            onClick={() => setShowNotifications(true)}
+          >
             <Badge badgeContent={notifications} color="error">
               <Notifications />
             </Badge>
@@ -213,6 +222,18 @@ const Navigation: React.FC = () => {
           <Person sx={{ mr: 2, fontSize: 20 }} />
           Mein Profil
         </MenuItem>
+        <MenuItem onClick={() => { navigate('/premium'); handleProfileMenuClose(); }}>
+          <Diamond sx={{ mr: 2, fontSize: 20 }} />
+          Premium
+        </MenuItem>
+        <MenuItem onClick={() => { navigate('/events'); handleProfileMenuClose(); }}>
+          <Event sx={{ mr: 2, fontSize: 20 }} />
+          Events
+        </MenuItem>
+        <MenuItem onClick={() => { navigate('/analytics'); handleProfileMenuClose(); }}>
+          <Analytics sx={{ mr: 2, fontSize: 20 }} />
+          Analytics
+        </MenuItem>
         <MenuItem onClick={() => { navigate('/einstellungen'); handleProfileMenuClose(); }}>
           <Settings sx={{ mr: 2, fontSize: 20 }} />
           Einstellungen
@@ -299,6 +320,12 @@ const Navigation: React.FC = () => {
           </Box>
         </Box>
       )}
+
+      {/* Notification Center */}
+      <NotificationCenter 
+        open={showNotifications} 
+        onClose={() => setShowNotifications(false)} 
+      />
 
       {/* Spacer für Fixed Navigation */}
       <Box sx={{ height: 56 }} />
