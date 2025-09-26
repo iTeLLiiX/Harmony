@@ -174,63 +174,35 @@ const LandingPage: React.FC = () => {
             </Typography>
           </Box>
           
-              <Box sx={{ 
-                display: 'flex', 
-                gap: 3, 
-                justifyContent: 'center', 
-                flexWrap: 'wrap',
-                mt: 4
-              }}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  onClick={handleRegistrierung}
-                  sx={{
-                    bgcolor: 'white',
-                    color: 'primary.main',
-                    px: 6,
-                    py: 3,
-                    fontSize: '1.125rem',
-                    fontWeight: 700,
-                    borderRadius: 3,
-                    minWidth: 280,
-                    height: 56,
-                    '&:hover': {
-                      bgcolor: 'grey.50',
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
-                    }
-                  }}
-                >
-                  Jetzt kostenlos registrieren
-                </Button>
-                <Button
-                  variant="outlined"
-                  size="large"
-                  onClick={() => navigate('/login')}
-                  sx={{
-                    borderColor: 'white',
-                    color: 'white',
-                    borderWidth: 2,
-                    px: 6,
-                    py: 3,
-                    fontSize: '1.125rem',
-                    fontWeight: 700,
-                    borderRadius: 3,
-                    minWidth: 280,
-                    height: 56,
-                    '&:hover': {
-                      bgcolor: 'rgba(255,255,255,0.1)',
-                      borderColor: 'white',
-                      borderWidth: 2,
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
-                    }
-                  }}
-                >
-                  Anmelden
-                </Button>
-              </Box>
+              <motion.div
+                variants={fadeInUp}
+                initial="initial"
+                animate="animate"
+              >
+                <Box sx={{ 
+                  display: 'flex', 
+                  gap: 3, 
+                  justifyContent: 'center', 
+                  flexWrap: 'wrap',
+                  mt: 4
+                }}>
+                  <PremiumButton
+                    variant="contained"
+                    size="large"
+                    onClick={handleRegistrierung}
+                  >
+                    Jetzt kostenlos registrieren
+                  </PremiumButton>
+                  
+                  <PremiumButton
+                    variant="outlined"
+                    size="large"
+                    onClick={() => navigate('/login')}
+                  >
+                    Anmelden
+                  </PremiumButton>
+                </Box>
+              </motion.div>
         </Container>
       </Box>
 

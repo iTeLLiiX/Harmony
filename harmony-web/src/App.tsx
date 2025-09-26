@@ -33,8 +33,8 @@ import Tutorial from './components/Tutorial';
 // Styles
 import './styles/globals.css';
 
-// Import des Premium Harmony Themes
-import { premiumHarmonyTheme } from './styles/premiumTheme';
+// Import des einheitlichen Harmony Themes
+import { harmonyTheme } from './styles/theme';
 import { ThemeProvider } from './contexts/ThemeContext';
 
 // React Query Client für API-Calls
@@ -82,7 +82,7 @@ const App: React.FC = () => {
             <main className="main-content">
               <Routes>
                 {/* Öffentliche Routen */}
-                <Route path="/" element={<PremiumLandingPage />} />
+                <Route path="/" element={<LandingPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/registrierung" element={<Registrierung />} />
                 
@@ -90,19 +90,19 @@ const App: React.FC = () => {
                 <Route 
                   path="/profil" 
                   element={
-                    isAuthenticated ? <Profil /> : <PremiumLandingPage />
+                    isAuthenticated ? <Profil /> : <LandingPage />
                   } 
                 />
                 <Route 
                   path="/matching" 
                   element={
-                    isAuthenticated ? <PremiumMatching /> : <PremiumLandingPage />
+                    isAuthenticated ? <Matching /> : <LandingPage />
                   } 
                 />
                 <Route 
                   path="/chat" 
                   element={
-                    isAuthenticated ? <PremiumChat /> : <PremiumLandingPage />
+                    isAuthenticated ? <Chat /> : <LandingPage />
                   } 
                 />
                 <Route 

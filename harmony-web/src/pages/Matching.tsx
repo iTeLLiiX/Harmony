@@ -36,6 +36,13 @@ import {
   Palette
 } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  PremiumButton, 
+  PremiumCard, 
+  fadeInUp,
+  staggerContainer,
+  scaleIn
+} from '../components/animations/AdvancedAnimations';
 
 interface Person {
   id: string;

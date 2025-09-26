@@ -1,6 +1,6 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, alpha } from '@mui/material/styles';
 
-// Harmony Design System - Professionell & Modern
+// Harmony Design System - Professionell & Modern für alle Komponenten
 export const harmonyTheme = createTheme({
   palette: {
     primary: {
@@ -150,20 +150,48 @@ export const harmonyTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
-          padding: '12px 24px',
+          borderRadius: 16,
+          padding: '16px 32px',
           fontSize: '1rem',
           fontWeight: 600,
           textTransform: 'none',
           boxShadow: 'none',
+          position: 'relative',
+          overflow: 'hidden',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          '&:before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: '-100%',
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+            transition: 'left 0.5s',
+          },
           '&:hover': {
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
-            transform: 'translateY(-1px)',
+            transform: 'translateY(-2px)',
+            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.15)',
+            '&:before': {
+              left: '100%',
+            },
+          },
+          '&:active': {
+            transform: 'translateY(0)',
           },
         },
         contained: {
+          background: 'linear-gradient(135deg, #C80026 0%, #8B0000 100%)',
           '&:hover': {
-            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+            background: 'linear-gradient(135deg, #8B0000 0%, #C80026 100%)',
+            boxShadow: '0 15px 35px rgba(200, 0, 38, 0.4)',
+          },
+        },
+        outlined: {
+          borderWidth: 2,
+          '&:hover': {
+            borderWidth: 2,
+            backgroundColor: alpha('#C80026', 0.04),
           },
         },
       },
@@ -171,12 +199,26 @@ export const harmonyTheme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 16,
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
+          borderRadius: 24,
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1)',
           border: '1px solid rgba(0, 0, 0, 0.05)',
+          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+          position: 'relative',
+          overflow: 'hidden',
+          '&:before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '4px',
+            background: 'linear-gradient(90deg, #C80026, #8B0000, #C80026)',
+            backgroundSize: '200% 100%',
+            animation: 'shimmer 2s infinite',
+          },
           '&:hover': {
-            boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
-            transform: 'translateY(-2px)',
+            transform: 'translateY(-8px)',
+            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.15)',
           },
         },
       },
@@ -236,6 +278,42 @@ export const harmonyTheme = createTheme({
     },
   },
 });
+
+// CSS Keyframes für Animationen
+const keyframes = `
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+
+// Inject keyframes into document
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = keyframes;
+  document.head.appendChild(style);
+}
 
 // Dark Mode Theme
 export const harmonyDarkTheme: Theme = {
