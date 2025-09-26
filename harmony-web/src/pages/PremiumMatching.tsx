@@ -45,6 +45,7 @@ import {
   Report
 } from '@mui/icons-material';
 import { motion, AnimatePresence, useAnimation, useMotionValue, useTransform } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
   PremiumButton, 
   PremiumCard, 
@@ -77,6 +78,7 @@ interface Person {
 }
 
 const PremiumMatching: React.FC = () => {
+  const navigate = useNavigate();
   const [currentPerson, setCurrentPerson] = useState<Person | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [showHelp, setShowHelp] = useState(false);

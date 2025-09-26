@@ -7,11 +7,14 @@ import { createTheme } from '@mui/material/styles';
 
 // Pages
 import LandingPage from './pages/LandingPage';
+import PremiumLandingPage from './pages/PremiumLandingPage';
 import Login from './pages/Login';
 import Registrierung from './pages/Registrierung';
 import Profil from './pages/Profil';
 import Matching from './pages/Matching';
+import PremiumMatching from './pages/PremiumMatching';
 import Chat from './pages/Chat';
+import PremiumChat from './pages/PremiumChat';
 import Einstellungen from './pages/Einstellungen';
 import Community from './pages/Community';
 import Persoenlichkeitstest from './pages/Persoenlichkeitstest';
@@ -79,7 +82,7 @@ const App: React.FC = () => {
             <main className="main-content">
               <Routes>
                 {/* Öffentliche Routen */}
-                <Route path="/" element={<LandingPage />} />
+                <Route path="/" element={<PremiumLandingPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/registrierung" element={<Registrierung />} />
                 
@@ -87,19 +90,19 @@ const App: React.FC = () => {
                 <Route 
                   path="/profil" 
                   element={
-                    isAuthenticated ? <Profil /> : <LandingPage />
+                    isAuthenticated ? <Profil /> : <PremiumLandingPage />
                   } 
                 />
                 <Route 
                   path="/matching" 
                   element={
-                    isAuthenticated ? <Matching /> : <LandingPage />
+                    isAuthenticated ? <PremiumMatching /> : <PremiumLandingPage />
                   } 
                 />
                 <Route 
                   path="/chat" 
                   element={
-                    isAuthenticated ? <Chat /> : <LandingPage />
+                    isAuthenticated ? <PremiumChat /> : <PremiumLandingPage />
                   } 
                 />
                 <Route 

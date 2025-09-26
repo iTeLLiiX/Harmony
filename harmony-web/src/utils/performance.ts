@@ -1,7 +1,6 @@
 // Performance Optimization Utilities for Harmony App
 
-import { useCallback, useMemo, useRef, useEffect } from 'react';
-import { debounce, throttle } from 'lodash';
+import { useCallback, useMemo, useRef, useEffect, useState } from 'react';
 
 // Debounced search hook
 export const useDebouncedSearch = (searchTerm: string, delay: number = 300) => {
