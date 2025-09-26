@@ -45,8 +45,7 @@ import {
   FilterList,
   Star,
   Verified,
-  Online,
-  Offline,
+  Circle,
   Schedule,
   Image,
   Gif,
@@ -484,14 +483,14 @@ const PremiumChat: React.FC = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   {currentChat.person.isOnline ? (
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                      <Online sx={{ fontSize: 16, color: 'success.main' }} />
+                      <Circle sx={{ fontSize: 16, color: 'success.main' }} />
                       <Typography variant="body2" color="success.main">
                         Online
                       </Typography>
                     </Box>
                   ) : (
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                      <Offline sx={{ fontSize: 16, color: 'text.secondary' }} />
+                      <Schedule sx={{ fontSize: 16, color: 'text.secondary' }} />
                       <Typography variant="body2" color="text.secondary">
                         Zuletzt online {currentChat.person.lastSeen}
                       </Typography>

@@ -23,10 +23,10 @@ import {
   AttachFile,
   EmojiEmotions,
   MoreVert,
-  Online,
   Favorite,
   Block,
-  Report
+  Report,
+  Circle
 } from '@mui/icons-material';
 
 interface ChatMessage {
@@ -206,7 +206,7 @@ const Chat: React.FC = () => {
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                   badgeContent={
                     chat.person.isOnline ? (
-                      <Online sx={{ fontSize: 12, color: 'success.main' }} />
+                      <Circle sx={{ fontSize: 12, color: 'success.main' }} />
                     ) : null
                   }
                 >
