@@ -567,7 +567,7 @@ const Registrierung: React.FC = () => {
               variant="contained"
               size="large"
               fullWidth
-              onClick={handleSubmit(onSubmit)}
+              onClick={() => navigate('/onboarding')}
               sx={{ mb: 2 }}
             >
               Profil vervollständigen

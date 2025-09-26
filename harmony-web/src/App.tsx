@@ -17,6 +17,7 @@ import Community from './pages/Community';
 import Persoenlichkeitstest from './pages/Persoenlichkeitstest';
 import Sicherheit from './pages/Sicherheit';
 import FAQ from './pages/FAQ';
+import Onboarding from './pages/Onboarding';
 
 // Components
 import Navigation from './components/Navigation';
@@ -172,6 +173,10 @@ const App: React.FC = () => {
                 <Route 
                   path="/faq" 
                   element={<FAQ />}
+                />
+                <Route 
+                  path="/onboarding" 
+                  element={<Onboarding />}
                 />
               </Routes>
             </main>
