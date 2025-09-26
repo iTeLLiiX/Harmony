@@ -319,6 +319,36 @@ const LandingPage: React.FC = () => {
               </Card>
             </Grid>
           </Grid>
+          
+          {/* Links zu wichtigen Seiten */}
+          <Box sx={{ mt: 6, textAlign: 'center' }}>
+            <Typography variant="h6" gutterBottom>
+              Wichtige Links
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
+              <Button
+                variant="outlined"
+                onClick={() => navigate('/sicherheit')}
+                sx={{ borderRadius: 3 }}
+              >
+                🛡️ Sicherheit & Datenschutz
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => navigate('/faq')}
+                sx={{ borderRadius: 3 }}
+              >
+                ❓ Häufige Fragen
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => navigate('/community')}
+                sx={{ borderRadius: 3 }}
+              >
+                💬 Community
+              </Button>
+            </Box>
+          </Box>
         </Container>
       </Box>
 

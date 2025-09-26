@@ -45,6 +45,8 @@ interface RegistrierungFormData {
   plz: string;
   entfernung: number;
   wasSuchst: string;
+  personalityType: string;
+  interests: string[];
 }
 
 const Registrierung: React.FC = () => {
@@ -65,13 +67,16 @@ const Registrierung: React.FC = () => {
       suchtGeschlecht: '',
       plz: '',
       entfernung: 25,
-      wasSuchst: ''
+      wasSuchst: '',
+      personalityType: '',
+      interests: []
     }
   });
 
   const steps = [
     'Handynummer bestätigen',
     'Persönliche Daten',
+    'Persönlichkeitstest',
     'Was suchst du?',
     'Fertig!'
   ];
@@ -360,6 +365,100 @@ const Registrierung: React.FC = () => {
         return (
           <Box>
             <Typography variant="h5" gutterBottom>
+              🧠 Persönlichkeitstest
+            </Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+              Entdecke deinen Persönlichkeitstyp für bessere Matches
+            </Typography>
+
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Controller
+                  name="personalityType"
+                  control={control}
+                  rules={{ required: 'Persönlichkeitstyp ist erforderlich' }}
+                  render={({ field }) => (
+                    <FormControl fullWidth error={!!errors.personalityType}>
+                      <InputLabel>Dein Persönlichkeitstyp</InputLabel>
+                      <Select {...field} label="Dein Persönlichkeitstyp">
+                        <MenuItem value="INTJ">INTJ - Der Architekt</MenuItem>
+                        <MenuItem value="INTP">INTP - Der Denker</MenuItem>
+                        <MenuItem value="ENTJ">ENTJ - Der Kommandant</MenuItem>
+                        <MenuItem value="ENTP">ENTP - Der Debattierer</MenuItem>
+                        <MenuItem value="INFJ">INFJ - Der Advokat</MenuItem>
+                        <MenuItem value="INFP">INFP - Der Mediator</MenuItem>
+                        <MenuItem value="ENFJ">ENFJ - Der Protagonist</MenuItem>
+                        <MenuItem value="ENFP">ENFP - Der Aktivist</MenuItem>
+                        <MenuItem value="ISTJ">ISTJ - Der Logistiker</MenuItem>
+                        <MenuItem value="ISFJ">ISFJ - Der Beschützer</MenuItem>
+                        <MenuItem value="ESTJ">ESTJ - Der Geschäftsführer</MenuItem>
+                        <MenuItem value="ESFJ">ESFJ - Der Konsul</MenuItem>
+                        <MenuItem value="ISTP">ISTP - Der Virtuose</MenuItem>
+                        <MenuItem value="ISFP">ISFP - Der Abenteurer</MenuItem>
+                        <MenuItem value="ESTP">ESTP - Der Unternehmer</MenuItem>
+                        <MenuItem value="ESFP">ESFP - Der Entertainer</MenuItem>
+                      </Select>
+                    </FormControl>
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Typography variant="h6" gutterBottom>
+                  Deine Interessen (wähle alle aus, die zu dir passen):
+                </Typography>
+                <Controller
+                  name="interests"
+                  control={control}
+                  render={({ field }) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                      {[
+                        'Musik', 'Gaming', 'Filme', 'Anime', 'Essen', 'Memes',
+                        'Outdoor', 'Technologie', 'Kunst', 'Tiere', 'Bücher',
+                        'Lernen', 'Geschichte', 'Psychologie', 'Kultur', 'Wissenschaft'
+                      ].map((interest) => (
+                        <FormControlLabel
+                          key={interest}
+                          control={
+                            <Checkbox
+                              checked={field.value?.includes(interest) || false}
+                              onChange={(e) => {
+                                const newInterests = e.target.checked
+                                  ? [...(field.value || []), interest]
+                                  : (field.value || []).filter((i: string) => i !== interest);
+                                field.onChange(newInterests);
+                              }}
+                            />
+                          }
+                          label={interest}
+                        />
+                      ))}
+                    </Box>
+                  )}
+                />
+              </Grid>
+            </Grid>
+
+            <Box sx={{ mt: 4, display: 'flex', gap: 2 }}>
+              <Button onClick={handleBack} size="large">
+                Zurück
+              </Button>
+              <Button
+                variant="contained"
+                size="large"
+                onClick={handleNext}
+                sx={{ flexGrow: 1 }}
+              >
+                Weiter
+              </Button>
+            </Box>
+          </Box>
+        );
+
+      case 3:
+        return (
+          <Box>
+            <Typography variant="h5" gutterBottom>
               💕 Was suchst du?
             </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
@@ -446,7 +545,7 @@ const Registrierung: React.FC = () => {
           </Box>
         );
 
-      case 3:
+      case 4:
         return (
           <Box sx={{ textAlign: 'center' }}>
             <Typography variant="h5" gutterBottom>

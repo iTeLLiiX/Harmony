@@ -15,6 +15,8 @@ import Chat from './pages/Chat';
 import Einstellungen from './pages/Einstellungen';
 import Community from './pages/Community';
 import Persoenlichkeitstest from './pages/Persoenlichkeitstest';
+import Sicherheit from './pages/Sicherheit';
+import FAQ from './pages/FAQ';
 
 // Components
 import Navigation from './components/Navigation';
@@ -162,6 +164,14 @@ const App: React.FC = () => {
                 <Route 
                   path="/persoenlichkeitstest" 
                   element={<Persoenlichkeitstest />}
+                />
+                <Route 
+                  path="/sicherheit" 
+                  element={<Sicherheit />}
+                />
+                <Route 
+                  path="/faq" 
+                  element={<FAQ />}
                 />
               </Routes>
             </main>
