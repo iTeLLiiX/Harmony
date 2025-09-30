@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "buildCommand": "cd harmony-web && npm install && npm run build",
+  "outputDirectory": "harmony-web/dist",
+  "installCommand": "cd harmony-web && npm install"
+}

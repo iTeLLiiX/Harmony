@@ -1,0 +1,504 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { 
+  Box, 
+  Container, 
+  Typography, 
+  Button, 
+  Card, 
+  CardContent,
+  Grid,
+  IconButton,
+  useTheme,
+  useMediaQuery
+} from '@mui/material';
+import {
+  MusicNote,
+  SportsSoccer,
+  Movie,
+  Favorite,
+  Security,
+  Help,
+  Star,
+  TrendingUp,
+  People,
+  Chat
+} from '@mui/icons-material';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import Logo from '../components/Logo';
+import { 
+  PremiumButton, 
+  PremiumCard, 
+  FloatingActionButton,
+  fadeInUp,
+  staggerContainer,
+  scaleIn,
+  slideInFromRight,
+  slideInFromLeft,
+  slideInFromBottom,
+  scaleInBounce,
+  heartBeat,
+  ParallaxSection
+} from '../components/animations/AdvancedAnimations';
+import { GlassmorphismCard, GlassmorphismButton } from '../components/Glassmorphism';
+import { HarmonyButton } from '../components/HarmonyButton';
+import { DarkModeToggle } from '../components/DarkModeToggle';
+import { LoadingStates } from '../components/LoadingStates';
+
+const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [showHelp, setShowHelp] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 300], [0, -50]);
+  const y2 = useTransform(scrollY, [0, 300], [0, -100]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0.8]);
+
+  const handleRegistrierung = () => {
+    // Neuen Benutzer markieren
+    localStorage.setItem('harmony_new_user', 'true');
+    localStorage.removeItem('harmony_onboarding_completed');
+    navigate('/registrierung');
+  };
+
+  const features = [
+    {
+      icon: <MusicNote sx={{ fontSize: 48, color: theme.palette.primary.main }} />,
+      title: 'Musik-Matching',
+      description: 'Finde Menschen mit ähnlichem Musikgeschmack. Spotify & Apple Music Integration.',
+      details: ['Lieblingskünstler teilen', 'Gemeinsame Playlists', 'Konzert-Interesse', 'Deutsche vs. internationale Musik']
+    },
+    {
+      icon: <SportsSoccer sx={{ fontSize: 48, color: theme.palette.secondary.main }} />,
+      title: 'Sport & Hobbys',
+      description: 'Entdecke gemeinsame Interessen in Sport und Freizeitaktivitäten.',
+      details: ['Bundesliga-Vereine', 'Fitness-Level', 'Outdoor vs. Indoor', 'Gemeinsame Aktivitäten']
+    },
+    {
+      icon: <Movie sx={{ fontSize: 48, color: theme.palette.error.main }} />,
+      title: 'Film & Serien',
+      description: 'Teile deine Lieblingsfilme und -serien. Inklusive deutsche Serien wie Tatort!',
+      details: ['Netflix & Amazon Prime', 'Tatort schauen', 'Kino-Dates', 'Gemeinsame Filmabende']
+    },
+    {
+      icon: <Favorite sx={{ fontSize: 48, color: theme.palette.success.main }} />,
+      title: 'Intelligentes Matching',
+      description: 'Unser Algorithmus findet die perfekten Matches basierend auf echten Interessen.',
+      details: ['Interesse-basiert', 'Altersgruppen-übergreifend', 'Lokale Suche', 'Match-Erklärungen']
+    }
+  ];
+
+  return (
+    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+      {/* Moderne Navigation mit Dark Mode Toggle */}
+      <Box
+        sx={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          background: 'rgba(255, 255, 255, 0.1)',
+          backdropFilter: 'blur(20px)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          borderTop: 'none',
+          zIndex: 1000,
+          p: 2,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}
+      >
+        <Logo size="small" />
+        <Box display="flex" gap={1}>
+          <DarkModeToggle />
+          <IconButton
+            onClick={() => setShowHelp(true)}
+            aria-label="Hilfe"
+            sx={{
+              background: 'linear-gradient(135deg, #E53E3E, #C53030)',
+              color: 'white',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #C53030, #E53E3E)',
+                transform: 'scale(1.05)',
+              }
+            }}
+          >
+            <Help />
+          </IconButton>
+        </Box>
+      </Box>
+
+          {/* Hero Section */}
+          <Box
+            sx={{
+              background: 'linear-gradient(135deg, #C80026 0%, #8B0000 100%)',
+              color: 'white',
+              py: { xs: 6, md: 8 },
+              textAlign: 'center',
+              position: 'relative',
+              overflow: 'hidden',
+              minHeight: '70vh',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+        {/* Background Pattern */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: `
+              radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+              radial-gradient(circle at 40% 40%, rgba(255,255,255,0.05) 0%, transparent 50%)
+            `,
+            zIndex: 1
+          }}
+        />
+            <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+              <Box sx={{ mb: 6 }}>
+                <Logo size="large" color="white" />
+              </Box>
+              <Typography 
+                variant="h2" 
+                component="h1" 
+                gutterBottom 
+                sx={{ 
+                  mb: 4,
+                  fontWeight: 700,
+                  fontSize: { xs: '2.5rem', md: '3.5rem' },
+                  lineHeight: 1.2
+                }}
+              >
+                Wir stehen für Liebe 💕
+              </Typography>
+              <Typography 
+                variant="h5" 
+                sx={{ 
+                  mb: 6, 
+                  maxWidth: 700, 
+                  mx: 'auto',
+                  fontWeight: 400,
+                  opacity: 0.9,
+                  lineHeight: 1.6
+                }}
+              >
+                Finde deine große Liebe basierend auf Persönlichkeit und gemeinsamen Interessen. 
+                Benutzerfreundlich für alle Altersgruppen (18-99 Jahre).
+              </Typography>
+          
+          {/* Social Proof wie bei Boo */}
+          <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4, flexWrap: 'wrap' }}>
+            <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'white' }}>
+              50.000+ Downloads
+            </Typography>
+            <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.8)' }}>
+              Jetzt beitreten
+            </Typography>
+          </Box>
+          
+              <motion.div
+                variants={fadeInUp}
+                initial="initial"
+                animate="animate"
+              >
+                <Box sx={{ 
+                  display: 'flex', 
+                  gap: 3, 
+                  justifyContent: 'center', 
+                  flexWrap: 'wrap',
+                  mt: 4
+                }}>
+                  <HarmonyButton
+                    variant="primary"
+                    size="large"
+                    onClick={handleRegistrierung}
+                    icon="🚀"
+                  >
+                    Jetzt kostenlos registrieren
+                  </HarmonyButton>
+                  
+                  <HarmonyButton
+                    variant="glass"
+                    size="large"
+                    onClick={() => navigate('/login')}
+                    icon="🔑"
+                  >
+                    Anmelden
+                  </HarmonyButton>
+                </Box>
+              </motion.div>
+        </Container>
+      </Box>
+
+      {/* Interessen-Universen wie bei Boo */}
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        <Typography variant="h2" component="h2" textAlign="center" gutterBottom>
+          Entdecke deine Interessen-Universen
+        </Typography>
+        <Typography variant="h6" textAlign="center" color="text.secondary" sx={{ mb: 6 }}>
+          Finde Menschen mit ähnlichen Leidenschaften und Hobbys
+        </Typography>
+        
+        {/* Universen Grid */}
+        <Grid container spacing={2} sx={{ mb: 8 }}>
+          {[
+            { name: '#music', count: '11 Mio. Seelen', color: '#FF6B6B' },
+            { name: '#gaming', count: '9,8 Mio. Seelen', color: '#4ECDC4' },
+            { name: '#movies', count: '8,4 Mio. Seelen', color: '#45B7D1' },
+            { name: '#anime', count: '6,9 Mio. Seelen', color: '#96CEB4' },
+            { name: '#food', count: '6,6 Mio. Seelen', color: '#FFEAA7' },
+            { name: '#memes', count: '4,5 Mio. Seelen', color: '#DDA0DD' },
+            { name: '#outdoors', count: '4 Mio. Seelen', color: '#98D8C8' },
+            { name: '#technology', count: '2,9 Mio. Seelen', color: '#F7DC6F' },
+            { name: '#art', count: '2,8 Mio. Seelen', color: '#BB8FCE' },
+            { name: '#animals', count: '2,8 Mio. Seelen', color: '#85C1E9' },
+            { name: '#books', count: '2,7 Mio. Seelen', color: '#F8C471' },
+            { name: '#learning', count: '2,3 Mio. Seelen', color: '#82E0AA' }
+          ].map((universe, index) => (
+            <Grid item xs={6} sm={4} md={3} key={index}>
+                  <Card
+                    sx={{
+                      p: 3,
+                      textAlign: 'center',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      border: `2px solid ${universe.color}`,
+                      borderRadius: 3,
+                      '&:hover': {
+                        transform: 'translateY(-6px)',
+                        boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)',
+                        bgcolor: `${universe.color}15`
+                      }
+                    }}
+                  >
+                <Typography variant="h6" sx={{ color: universe.color, fontWeight: 'bold' }}>
+                  {universe.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {universe.count}
+                </Typography>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+
+      {/* Features Section */}
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        <Typography variant="h2" component="h2" textAlign="center" gutterBottom>
+          Warum Harmony?
+        </Typography>
+        <Typography variant="h6" textAlign="center" color="text.secondary" sx={{ mb: 6 }}>
+          Wir machen Dating einfach und erfolgreich für alle Altersgruppen
+        </Typography>
+
+        <Grid container spacing={4}>
+          {features.map((feature, index) => (
+            <Grid item xs={12} md={6} key={index}>
+                  <Card
+                    sx={{
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      borderRadius: 3,
+                      border: '1px solid rgba(0, 0, 0, 0.05)',
+                      '&:hover': {
+                        transform: 'translateY(-8px)',
+                        boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
+                      }
+                    }}
+                  >
+                <CardContent sx={{ flexGrow: 1, p: 4 }}>
+                  <Box sx={{ textAlign: 'center', mb: 3 }}>
+                    {feature.icon}
+                  </Box>
+                  <Typography variant="h5" component="h3" gutterBottom>
+                    {feature.title}
+                  </Typography>
+                  <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+                    {feature.description}
+                  </Typography>
+                  <Box component="ul" sx={{ pl: 2, m: 0 }}>
+                    {feature.details.map((detail, detailIndex) => (
+                      <Typography
+                        key={detailIndex}
+                        component="li"
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ mb: 1 }}
+                      >
+                        {detail}
+                      </Typography>
+                    ))}
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+
+      {/* Deutsche Besonderheiten */}
+      <Box sx={{ bgcolor: 'grey.50', py: 8 }}>
+        <Container maxWidth="lg">
+          <Typography variant="h2" component="h2" textAlign="center" gutterBottom>
+            🇩🇪 Für deutsche Nutzer gemacht
+          </Typography>
+          <Grid container spacing={4} sx={{ mt: 4 }}>
+            <Grid item xs={12} md={4}>
+              <Card sx={{ textAlign: 'center', p: 3 }}>
+                <Typography variant="h6" gutterBottom>
+                  Tatort-Fans
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Finde andere Tatort-Liebhaber für gemütliche Sonntagabende
+                </Typography>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Card sx={{ textAlign: 'center', p: 3 }}>
+                <Typography variant="h6" gutterBottom>
+                  Bundesliga
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Teile deine Liebe zu deinem Verein und finde Gleichgesinnte
+                </Typography>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Card sx={{ textAlign: 'center', p: 3 }}>
+                <Typography variant="h6" gutterBottom>
+                  DSGVO-konform
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Deutsche Server, Datenschutz und Sicherheit haben Priorität
+                </Typography>
+              </Card>
+            </Grid>
+          </Grid>
+          
+          {/* Links zu wichtigen Seiten */}
+          <Box sx={{ mt: 6, textAlign: 'center' }}>
+            <Typography variant="h6" gutterBottom>
+              Wichtige Links
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
+              <Button
+                variant="outlined"
+                onClick={() => navigate('/sicherheit')}
+                sx={{ borderRadius: 3 }}
+              >
+                🛡️ Sicherheit & Datenschutz
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => navigate('/faq')}
+                sx={{ borderRadius: 3 }}
+              >
+                ❓ Häufige Fragen
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => navigate('/community')}
+                sx={{ borderRadius: 3 }}
+              >
+                💬 Community
+              </Button>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+
+      {/* CTA Section */}
+      <Box sx={{ bgcolor: 'primary.main', color: 'white', py: 8 }}>
+        <Container maxWidth="md" sx={{ textAlign: 'center' }}>
+          <Typography variant="h3" component="h2" gutterBottom>
+            Bereit für dein erstes Match?
+          </Typography>
+          <Typography variant="h6" sx={{ mb: 4 }}>
+            Registriere dich kostenlos und finde Menschen mit ähnlichen Interessen
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={handleRegistrierung}
+            sx={{
+              bgcolor: 'white',
+              color: 'primary.main',
+              px: 6,
+              py: 2,
+              fontSize: '18px',
+              fontWeight: 600,
+              borderRadius: 2
+            }}
+          >
+            Jetzt starten
+          </Button>
+        </Container>
+      </Box>
+
+      {/* Hilfe Modal */}
+      {showHelp && (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            bgcolor: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1300
+          }}
+          onClick={() => setShowHelp(false)}
+        >
+          <Card
+            sx={{ maxWidth: 500, m: 2 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <CardContent sx={{ p: 4 }}>
+              <Typography variant="h5" gutterBottom>
+                🆘 Hilfe & Support
+              </Typography>
+              <Typography variant="body1" paragraph>
+                Brauchst du Hilfe bei der Registrierung oder hast Fragen zur App?
+              </Typography>
+              <Box sx={{ mt: 3 }}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  sx={{ mb: 2 }}
+                  onClick={() => {
+                    window.open('mailto:support@harmony-dating.de', '_blank');
+                    setShowHelp(false);
+                  }}
+                >
+                  📧 Email Support
+                </Button>
+                <Button
+                  variant="outlined"
+                  fullWidth
+                  onClick={() => setShowHelp(false)}
+                >
+                  Schließen
+                </Button>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      )}
+    </Box>
+  );
+};
+
+export default LandingPage;
